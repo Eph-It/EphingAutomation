@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[User]
+(
+	[Id] INT NOT NULL PRIMARY KEY, 
+    [Created] DATETIME NOT NULL DEFAULT GETUTCDATE(), 
+    [Created_By] INT NOT NULL, 
+    [Active] BIT NOT NULL DEFAULT 1
+)
