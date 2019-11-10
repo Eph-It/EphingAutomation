@@ -10,7 +10,12 @@ namespace EphingAutomation.CM.StatusMessageProcessorService.Repository
     {
         public Task StartProcessingAsync(StatusMessage message)
         {
+            var task = Task.Run(() => StartProcessing(message));
+            return task;
+        }
 
+        private void StartProcessing(StatusMessage message)
+        {
 
         }
     }
