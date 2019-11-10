@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using System;
+﻿using System;
 using Serilog;
 using System.IO;
+using Microsoft.Extensions.Hosting;
 
 namespace EphingAutomation.Logging
 {
     public class EALogging
     {
-        private IHostingEnvironment _environment;
+        private IHostEnvironment _environment;
         public EALogging(IHostEnvironment environment)
         {
             _environment = environment;
@@ -22,7 +22,7 @@ namespace EphingAutomation.Logging
             string path;
             if(_environment != null)
             {
-                path = Path.Combine(_environment.ContentRootPath ?? _environment.WebRootPath, "Logs", $"{LogName}.log");
+                path = Path.Combine(_environment.ContentRootPath, "Logs", $"{LogName}.log");
                 path = Path.Combine("Logs", $"{LogName}.log");
             }
             else
