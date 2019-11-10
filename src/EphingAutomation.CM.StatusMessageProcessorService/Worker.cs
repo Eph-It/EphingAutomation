@@ -20,6 +20,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
         private NamedPipeServerStream _pipeServer;
         IProcessStatusMessage _processStatusMessage;
         IHostEnvironment _environment;
+        IAsyncResult _beginWait;
         public Worker(IProcessStatusMessage processStatusMessage, IHostEnvironment environment)
         {
             _processStatusMessage = processStatusMessage;
@@ -28,20 +29,21 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            Log.Information("Starting background worker");
             _pipeServer = new NamedPipeServerStream("EphingAdmin.CM.StatusMessages", PipeDirection.InOut);
             _workerTasks = new List<Task>();
-            IAsyncResult beginWait = _pipeServer.BeginWaitForConnection(WaitForConnectionCallBack, null);
+            _beginWait = _pipeServer.BeginWaitForConnection(WaitForConnectionCallBack, null);
             DateTime startedBeginWait = DateTime.UtcNow;
             while (!stoppingToken.IsCancellationRequested)
             {
-                if (beginWait.IsCompleted)
+                if (_beginWait.IsCompleted)
                 {
-                    beginWait = _pipeServer.BeginWaitForConnection(WaitForConnectionCallBack, null);
+                    _beginWait = _pipeServer.BeginWaitForConnection(WaitForConnectionCallBack, _pipeServer);
                 }
                 Thread.Sleep(100);
                 if(startedBeginWait < DateTime.UtcNow.AddMinutes(-10))
                 {
-                    _pipeServer.EndWaitForConnection(beginWait);
+                    _pipeServer.EndWaitForConnection(_beginWait);
                     await Task.WhenAll(_workerTasks.ToArray());
                     break;
                 }
@@ -50,20 +52,21 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
         }
         private void WaitForConnectionCallBack(IAsyncResult result)
         {
-            Log.Information("Wait for connection called");
+            _pipeServer.EndWaitForConnection(result);
             var statusMessage = Serializer.Deserialize<StatusMessage>(_pipeServer);
+            //_pipeServer.EndWaitForConnection(_beginWait);
             if(statusMessage != null)
             {
-
+                Log.Information("Status message is {@statusMessage}", statusMessage);
             }
+            
         }
         private Task _executingTask;
         private readonly CancellationTokenSource _stoppingCts = new CancellationTokenSource();
 
         public override Task StartAsync(CancellationToken cancellationToken)
         {
-            var loggerConfig = new EALogging();
-            loggerConfig.Configure("StatusMessageProcessorService");
+            
             Log.Information("Starting service...");
 
             // Store the task we're executing
