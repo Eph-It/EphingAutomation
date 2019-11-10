@@ -20,6 +20,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService.Repository
         {
             Log.Information("Processing status message {@message}", message);
             Thread.Sleep(100);
+            Log.Information("Finished processing status message {@message}", message);
         }
     }
 }

@@ -1,5 +1,5 @@
 $ServiceName = 'EA.CM.StatusMessageProcessorService'
-$Service = Get-WmiObject -Query  "Select * FROM Win32_Service where Name like '$ServiceName'"
+$Service = Get-CimInstance -Query  "Select * FROM Win32_Service where Name like '$ServiceName'"
 
 $BinaryPath = "$PSScriptRoot\EphingAutomation.CM.StatusMessageProcessorService\bin\debug\netcoreapp3.0\EphingAutomation.CM.StatusMessageProcessorService.exe"
 
