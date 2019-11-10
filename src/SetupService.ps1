@@ -12,6 +12,8 @@ if($Service -ne $null) {
 }
 
 if($Service -eq $null){
+    
     New-Service -Name 'EA.CM.StatusMessageProcessorService' -BinaryPathName $BinaryPath
+    cmd /c subinacl.exe /service $ServiceName "/grant=$($env:COMPUTERNAME)\$($env:USERNAME)=PTO"
 }
 
