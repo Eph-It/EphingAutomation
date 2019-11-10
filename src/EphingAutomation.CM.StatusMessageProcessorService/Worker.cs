@@ -16,20 +16,19 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
 {
     public class Worker : BackgroundService
     {
-        private readonly ILogger<Worker> _logger;
         private List<Task> _workerTasks;
         private NamedPipeServerStream _pipeServer;
         IProcessStatusMessage _processStatusMessage;
         public Worker(IProcessStatusMessage processStatusMessage)
         {
-            var loggerConfig = new EALogging();
-            loggerConfig.Configure("StatusMessageProcessorService");
-            Log.Information("Starting service...");
             _processStatusMessage = processStatusMessage;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            var loggerConfig = new EALogging();
+            loggerConfig.Configure("StatusMessageProcessorService");
+            Log.Information("Starting service...");
             _pipeServer = new NamedPipeServerStream("EphingAdmin.CM.StatusMessages", PipeDirection.InOut);
             _workerTasks = new List<Task>();
             IAsyncResult beginWait = _pipeServer.BeginWaitForConnection(WaitForConnectionCallBack, null);
