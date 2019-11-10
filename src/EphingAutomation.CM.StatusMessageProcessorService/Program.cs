@@ -6,6 +6,7 @@ using EphingAutomation.CM.StatusMessageProcessorService.Repository;
 using EphingAutomation.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Hosting.WindowsServices;
 using Serilog;
 
@@ -25,6 +26,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddSingleton<IProcessStatusMessage, ProcessStatusMessage>();
+                    services.AddSingleton<IHostEnvironment, HostingEnvironment>();
                     services.AddHostedService<Worker>();
                 });
     }
