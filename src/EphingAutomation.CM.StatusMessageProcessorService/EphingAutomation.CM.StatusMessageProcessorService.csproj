@@ -25,4 +25,8 @@
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File &quot;$(ProjectDir)BeforeBuild.ps1&quot;" />
   </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File &quot;$(ProjectDir)AfterBuild.ps1&quot;" />
+  </Target>
 </Project>
