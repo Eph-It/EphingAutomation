@@ -6,6 +6,7 @@ using System.IO;
 using System.IO.Pipes;
 using System.Linq;
 using System.ServiceProcess;
+using Serilog;
 
 namespace EphingAutomation.CM.StatusMessageReceiver
 {
@@ -13,11 +14,14 @@ namespace EphingAutomation.CM.StatusMessageReceiver
     {
         static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("EA.CM.StatusMessageReceiver.log", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
             IServiceRepository serviceRepo = new ServiceRepository();
             IStatusMessageReceiverErrorHandling statMessageErrorHandling = new StatusMessageReceiverErrorHandling();
             var smObject = new StatusMessage()
             {
-                RequestId = new Guid(),
+                RequestId = Guid.NewGuid(),
                 Arguments = args
             };
             try
