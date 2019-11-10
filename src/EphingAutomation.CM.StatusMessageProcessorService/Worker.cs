@@ -26,9 +26,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var loggerConfig = new EALogging();
-            loggerConfig.Configure("StatusMessageProcessorService");
-            Log.Information("Starting service...");
+            
             _pipeServer = new NamedPipeServerStream("EphingAdmin.CM.StatusMessages", PipeDirection.InOut);
             _workerTasks = new List<Task>();
             IAsyncResult beginWait = _pipeServer.BeginWaitForConnection(WaitForConnectionCallBack, null);
@@ -62,6 +60,10 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
 
         public override Task StartAsync(CancellationToken cancellationToken)
         {
+            var loggerConfig = new EALogging();
+            loggerConfig.Configure("StatusMessageProcessorService");
+            Log.Information("Starting service...");
+
             // Store the task we're executing
             _executingTask = ExecuteAsync(_stoppingCts.Token);
 
