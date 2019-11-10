@@ -14,9 +14,7 @@ namespace EphingAutomation.CM.StatusMessageReceiver
     {
         static void Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.File("EA.CM.StatusMessageReceiver.log", rollingInterval: RollingInterval.Day)
-                .CreateLogger();
+            
             Log.Information("Started with parameters {@args}", args);
             IServiceRepository serviceRepo = new ServiceRepository();
             IStatusMessageReceiverErrorHandling statMessageErrorHandling = new StatusMessageReceiverErrorHandling();

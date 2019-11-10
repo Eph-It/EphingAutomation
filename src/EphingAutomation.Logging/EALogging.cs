@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using System;
+using Serilog;
 
 namespace EphingAutomation.Logging
 {
@@ -9,6 +10,13 @@ namespace EphingAutomation.Logging
         public EALogging(IHostingEnvironment environment)
         {
             _environment = environment;
+        }
+
+        public void Configure(string LogName)
+        {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("EA.CM.StatusMessageReceiver.log", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
         }
     }
 }
