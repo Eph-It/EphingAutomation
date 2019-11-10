@@ -12,10 +12,22 @@ namespace EphingAutomation.Logging
         {
             _environment = environment;
         }
+        public EALogging()
+        {
+            
+        }
 
         public void Configure(string LogName)
         {
-            var path = Path.Combine(_environment.ContentRootPath ?? _environment.WebRootPath, "Logs" ,$"{LogName}.log");
+            string path;
+            if(_environment != null)
+            {
+                path = Path.Combine(_environment?.ContentRootPath ?? _environment?.WebRootPath, "Logs", $"{LogName}.log");
+            }
+            else
+            {
+                path = Path.Combine("Logs", $"{LogName}.log");
+            }
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.File(path, rollingInterval: RollingInterval.Day)
                 .CreateLogger();

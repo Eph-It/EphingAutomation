@@ -7,6 +7,7 @@ using System.IO.Pipes;
 using System.Linq;
 using System.ServiceProcess;
 using Serilog;
+using EphingAutomation.Logging;
 
 namespace EphingAutomation.CM.StatusMessageReceiver
 {
@@ -14,7 +15,8 @@ namespace EphingAutomation.CM.StatusMessageReceiver
     {
         static void Main(string[] args)
         {
-            
+            var loggerConfig = new EALogging();
+            loggerConfig.Configure("StatusMessageReceiver");
             Log.Information("Started with parameters {@args}", args);
             IServiceRepository serviceRepo = new ServiceRepository();
             IStatusMessageReceiverErrorHandling statMessageErrorHandling = new StatusMessageReceiverErrorHandling();
