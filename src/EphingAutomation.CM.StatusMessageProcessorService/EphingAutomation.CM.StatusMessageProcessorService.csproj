@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EphingAutomation.Logging\EphingAutomation.Logging.csproj" />
     <ProjectReference Include="..\EphingAutomation.Models.ConfigMgr\EphingAutomation.Models.ConfigMgr.csproj" />
   </ItemGroup>
 

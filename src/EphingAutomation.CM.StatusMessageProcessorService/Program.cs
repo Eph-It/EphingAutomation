@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EphingAutomation.CM.StatusMessageProcessorService.Repository;
+using EphingAutomation.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.WindowsServices;
@@ -15,11 +16,10 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
  
         public static void Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.File("EA.CM.StatusMessageProcessorService.log", rollingInterval: RollingInterval.Day)
-                .CreateLogger();
-            Log.Information("Starting service...");
             CreateHostBuilder(args).Build().Run();
+            var loggerConfig = new EALogging();
+            loggerConfig.Configure("StatusMessageProcessorService");
+            Log.Information("Starting service...");
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
