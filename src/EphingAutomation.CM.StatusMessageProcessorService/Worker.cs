@@ -19,14 +19,15 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
         private List<Task> _workerTasks;
         private NamedPipeServerStream _pipeServer;
         IProcessStatusMessage _processStatusMessage;
-        public Worker(IProcessStatusMessage processStatusMessage)
+        IHostEnvironment _environment;
+        public Worker(IProcessStatusMessage processStatusMessage, IHostEnvironment environment)
         {
             _processStatusMessage = processStatusMessage;
+            _environment = environment;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            
             _pipeServer = new NamedPipeServerStream("EphingAdmin.CM.StatusMessages", PipeDirection.InOut);
             _workerTasks = new List<Task>();
             IAsyncResult beginWait = _pipeServer.BeginWaitForConnection(WaitForConnectionCallBack, null);
