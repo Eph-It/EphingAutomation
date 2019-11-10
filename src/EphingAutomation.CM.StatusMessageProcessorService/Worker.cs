@@ -5,10 +5,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using EphingAutomation.CM.StatusMessageProcessorService.Repository;
+using EphingAutomation.Logging;
 using EphingAutomation.Models.ConfigMgr;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ProtoBuf;
+using Serilog;
 
 namespace EphingAutomation.CM.StatusMessageProcessorService
 {
@@ -18,9 +20,11 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
         private List<Task> _workerTasks;
         private NamedPipeServerStream _pipeServer;
         IProcessStatusMessage _processStatusMessage;
-        public Worker(ILogger<Worker> logger, IProcessStatusMessage processStatusMessage)
+        public Worker(IProcessStatusMessage processStatusMessage)
         {
-            _logger = logger;
+            var loggerConfig = new EALogging();
+            loggerConfig.Configure("StatusMessageProcessorService");
+            Log.Information("Starting service...");
             _processStatusMessage = processStatusMessage;
         }
 

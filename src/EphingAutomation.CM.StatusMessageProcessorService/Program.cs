@@ -17,9 +17,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
-            var loggerConfig = new EALogging();
-            loggerConfig.Configure("StatusMessageProcessorService");
-            Log.Information("Starting service...");
+            
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
