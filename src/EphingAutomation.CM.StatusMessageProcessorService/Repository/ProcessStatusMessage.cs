@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Serilog;
+using System.Threading;
 
 namespace EphingAutomation.CM.StatusMessageProcessorService.Repository
 {
@@ -18,6 +19,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService.Repository
         private void StartProcessing(StatusMessage message)
         {
             Log.Information("Processing status message {@message}", message);
+            Thread.Sleep(100);
         }
     }
 }
