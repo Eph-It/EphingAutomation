@@ -22,7 +22,7 @@ namespace EphingAutomation.Logging
             string path;
             if(_environment != null)
             {
-                path = Path.Combine(_environment?.ContentRootPath ?? _environment?.WebRootPath, "Logs", $"{LogName}.log");
+                path = Path.Combine(_environment.ContentRootPath ?? _environment?.WebRootPath, "Logs", $"{LogName}.log");
             }
             else
             {
