@@ -44,6 +44,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
                     break;
                 }
             }
+            _pipeServer.Dispose();
         }
         private void WaitForConnectionCallBack(IAsyncResult result)
         {
