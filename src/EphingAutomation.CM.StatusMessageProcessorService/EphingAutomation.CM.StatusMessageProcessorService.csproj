@@ -21,4 +21,8 @@
   <ItemGroup>
     <ProjectReference Include="..\EphingAutomation.Models.ConfigMgr\EphingAutomation.Models.ConfigMgr.csproj" />
   </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command=". &quot;$(ProjectPath)\BeforeBuild.ps1&quot;" />
+  </Target>
 </Project>
