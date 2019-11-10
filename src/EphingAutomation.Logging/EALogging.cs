@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using System;
 using Serilog;
+using System.IO;
 
 namespace EphingAutomation.Logging
 {
@@ -14,8 +15,9 @@ namespace EphingAutomation.Logging
 
         public void Configure(string LogName)
         {
+            var path = Path.Combine(_environment.ContentRootPath ?? _environment.WebRootPath, "Logs" ,$"{LogName}.log");
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.File("EA.CM.StatusMessageReceiver.log", rollingInterval: RollingInterval.Day)
+                .WriteTo.File(path, rollingInterval: RollingInterval.Day)
                 .CreateLogger();
         }
     }
