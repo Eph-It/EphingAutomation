@@ -6,6 +6,7 @@ $BinaryPath = "$PSScriptRoot\EphingAutomation.CM.StatusMessageProcessorService\b
 if($Service -ne $null) {
     if(-not ( $Service.PathName -contains $BinaryPath )){
         Remove-Service -Name $ServiceName -Confirm:$false
+        & cmd /c sc delete $ServiceName
         $Service = $null
     }
 }
