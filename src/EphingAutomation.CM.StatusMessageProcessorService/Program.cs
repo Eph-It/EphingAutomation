@@ -10,7 +10,7 @@ using Serilog;
 
 namespace EphingAutomation.CM.StatusMessageProcessorService
 {
-    public class Program
+    public static class Program
     {
  
         public static void Main(string[] args)
@@ -18,6 +18,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.File("EA.CM.StatusMessageProcessorService.log", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
+            Log.Information("Starting service...");
             CreateHostBuilder(args).Build().Run();
         }
 
