@@ -32,7 +32,7 @@ namespace EphingAutomation.Logging
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.File(path, rollingInterval: RollingInterval.Day)
                 .CreateLogger();
-            Log.Information($"Environment content root {_environment?.ContentRootPath}");
+            Log.Information("Environment content root {@_environment}", _environment);
         }
     }
 }
