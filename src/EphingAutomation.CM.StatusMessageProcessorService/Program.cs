@@ -16,14 +16,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
  
         public static void Main(string[] args)
         {
-            if (Environment.UserInteractive)
-            {
-                
-            }
-            else
-            {
-                CreateHostBuilder(args).Build().Run();
-            }
+            CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
