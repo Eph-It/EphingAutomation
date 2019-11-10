@@ -23,6 +23,6 @@
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command=". &quot;$(ProjectPath)\BeforeBuild.ps1&quot;" />
+    <Exec Command="powershell.exe -File &quot;$(ProjectDir)BeforeBuild.ps1&quot;" />
   </Target>
 </Project>
