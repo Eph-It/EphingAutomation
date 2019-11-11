@@ -71,7 +71,7 @@ namespace EphingAutomation.CM.StatusMessageReceiver.Repository
                     }
 
                     channel.BasicPublish(exchange: "",
-                                 routingKey: "EphingAdminStatusMessageKey",
+                                 routingKey: "EphingAdminStatusMessageQueue",
                                  basicProperties: properties,
                                  body: msgOut);
 
