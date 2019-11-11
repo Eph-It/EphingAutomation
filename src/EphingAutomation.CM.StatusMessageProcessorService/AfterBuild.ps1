@@ -1,2 +1,2 @@
 $ServiceName = 'EA.CM.StatusMessageProcessorService'
-Get-Service -Name $ServiceName | Start-Service
+#Get-Service -Name $ServiceName | Start-Service
