@@ -28,7 +28,6 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddSingleton<IProcessStatusMessage, ProcessStatusMessage>();
-                    services.AddSingleton<IHostEnvironment, HostingEnvironment>();
                     services.AddHostedService<Worker>();
                 });
     }
