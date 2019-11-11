@@ -20,6 +20,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
         private NamedPipeServerStream _pipeServer;
         IProcessStatusMessage _processStatusMessage;
         IAsyncResult _beginWait;
+        DateTime startedBeginWait;
         public Worker(IProcessStatusMessage processStatusMessage)
         {
             _processStatusMessage = processStatusMessage;
@@ -31,11 +32,11 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
             _pipeServer = new NamedPipeServerStream("EphingAdmin.CM.StatusMessages", PipeDirection.InOut);
             _workerTasks = new List<Task>();
             _beginWait = _pipeServer.BeginWaitForConnection(new AsyncCallback(WaitForConnectionCallBack), _pipeServer);
-            DateTime startedBeginWait = DateTime.UtcNow;
+            startedBeginWait = DateTime.UtcNow;
             while (!stoppingToken.IsCancellationRequested)
             {
                 Thread.Sleep(100);
-                if(startedBeginWait < DateTime.UtcNow.AddMinutes(-10))
+                if (startedBeginWait < DateTime.UtcNow.AddMinutes(-10))
                 {
                     await Task.WhenAll(_workerTasks.ToArray());
                     break;
@@ -45,21 +46,21 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
         }
         private void WaitForConnectionCallBack(IAsyncResult result)
         {
-            
+
             var statusMessage = Serializer.Deserialize<StatusMessage>((NamedPipeServerStream)result.AsyncState);
-            
-            if(statusMessage != null)
+
+            if (statusMessage != null)
             {
                 Log.Information("Status message is {@statusMessage}", statusMessage);
             }
             _pipeServer.Close();
             _pipeServer = null;
             _pipeServer = new NamedPipeServerStream("EphingAdmin.CM.StatusMessages", PipeDirection.InOut);
+            startedBeginWait = DateTime.UtcNow;
+            _beginWait = _pipeServer.BeginWaitForConnection(new AsyncCallback(WaitForConnectionCallBack), _pipeServer);
         }
         private Task _executingTask;
         private readonly CancellationTokenSource _stoppingCts = new CancellationTokenSource();
-        startedBeginWait = DateTime.UtcNow;
-        _beginWait = _pipeServer.BeginWaitForConnection(new AsyncCallback(WaitForConnectionCallBack), _pipeServer);
 
         public override Task StartAsync(CancellationToken cancellationToken)
         {
