@@ -60,7 +60,9 @@ namespace EphingAutomation.CM.StatusMessageReceiver.Repository
                                  durable: true,
                                  exclusive: false,
                                  autoDelete: false,
-                                 arguments: null);
+                                 arguments: null); 
+                    var properties = channel.CreateBasicProperties();
+                    properties.Persistent = true;
                     byte[] msgOut;
                     using (var stream = new MemoryStream())
                     {
@@ -70,11 +72,12 @@ namespace EphingAutomation.CM.StatusMessageReceiver.Repository
 
                     channel.BasicPublish(exchange: "",
                                  routingKey: "hello",
-                                 basicProperties: null,
+                                 basicProperties: properties,
                                  body: msgOut);
+
                 }
             }
-            using (var pipe = new NamedPipeClientStream(".", "EphingAdmin.CM.StatusMessages", PipeDirection.InOut, PipeOptions.None))
+            /*using (var pipe = new NamedPipeClientStream(".", "EphingAdmin.CM.StatusMessages", PipeDirection.InOut, PipeOptions.None))
             {
                 try
                 {
@@ -91,7 +94,7 @@ namespace EphingAutomation.CM.StatusMessageReceiver.Repository
                     throw new Exception("Pipe is not connected!");
                 }
                 Serializer.Serialize(pipe, smObject);
-            }
+            }*/
         }
     }
 }

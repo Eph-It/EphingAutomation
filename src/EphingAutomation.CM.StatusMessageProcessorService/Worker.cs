@@ -29,6 +29,8 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             Log.Information("Starting background worker");
+
+            /*
             _pipeServer = new NamedPipeServerStream("EphingAdmin.CM.StatusMessages", PipeDirection.InOut);
             _workerTasks = new List<Task>();
             _beginWait = _pipeServer.BeginWaitForConnection(new AsyncCallback(WaitForConnectionCallBack), _pipeServer);
@@ -43,6 +45,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
                 }
             }
             _pipeServer.Dispose();
+            */
         }
         private void WaitForConnectionCallBack(IAsyncResult result)
         {
