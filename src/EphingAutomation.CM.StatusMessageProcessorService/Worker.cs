@@ -19,12 +19,10 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
         private List<Task> _workerTasks;
         private NamedPipeServerStream _pipeServer;
         IProcessStatusMessage _processStatusMessage;
-        IHostEnvironment _environment;
         IAsyncResult _beginWait;
-        public Worker(IProcessStatusMessage processStatusMessage, IHostEnvironment environment)
+        public Worker(IProcessStatusMessage processStatusMessage)
         {
             _processStatusMessage = processStatusMessage;
-            _environment = environment;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
