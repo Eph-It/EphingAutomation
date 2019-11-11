@@ -1,5 +1,6 @@
 ﻿using EphingAutomation.Models.ConfigMgr;
 using ProtoBuf;
+using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 using System.IO.Pipes;
@@ -49,7 +50,15 @@ namespace EphingAutomation.CM.StatusMessageReceiver.Repository
         }
         public void SendArgs(StatusMessage smObject)
         {
-            using(var pipe = new NamedPipeClientStream(".", "EphingAdmin.CM.StatusMessages", PipeDirection.InOut, PipeOptions.None))
+            var factory = new ConnectionFactory() { HostName = "localhost" };
+            using (var connection = factory.CreateConnection())
+            {
+                using (var channel = connection.CreateModel())
+                {
+
+                }
+            }
+            using (var pipe = new NamedPipeClientStream(".", "EphingAdmin.CM.StatusMessages", PipeDirection.InOut, PipeOptions.None))
             {
                 try
                 {
