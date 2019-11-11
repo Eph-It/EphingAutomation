@@ -53,6 +53,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
                             statusMessage = Serializer.Deserialize<StatusMessage>(stream);
                         }
                         Log.Information("Status message is {@statusMessage}", statusMessage);
+                        Console.WriteLine("test");
                         channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
                         lastProcessedMessage = DateTime.UtcNow;
                     };
