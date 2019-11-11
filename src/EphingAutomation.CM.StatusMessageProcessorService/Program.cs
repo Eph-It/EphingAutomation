@@ -25,6 +25,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
                 backgroundWorker.StartAsync(new System.Threading.CancellationToken());
                 Console.ReadLine();
                 backgroundWorker.StopAsync(new System.Threading.CancellationToken());
+                Console.ReadLine();
                 backgroundWorker.Dispose();
             }
             else
