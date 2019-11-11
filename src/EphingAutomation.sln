@@ -19,6 +19,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EphingAutomation.Logging", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EphingAutomation.CM.StatusMessageService", "EphingAutomation.CM.StatusMessageService\EphingAutomation.CM.StatusMessageService.csproj", "{73DFDA62-F657-4AC4-A20D-FF4014D65A5D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EphingAutomation.CM.StatusMessageProcessor", "EphingAutomation.CM.StatusMessageProcessor\EphingAutomation.CM.StatusMessageProcessor.csproj", "{DADE464A-6F0D-4CE5-9F55-107FB9CA6416}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EphingAutomation.CM.StatusMessageDB", "EphingAutomation.CM.StatusMessageDB\EphingAutomation.CM.StatusMessageDB.csproj", "{DF24C3B3-D1EE-4A03-8BB0-0349C6DA7488}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +63,14 @@ Global
 		{73DFDA62-F657-4AC4-A20D-FF4014D65A5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73DFDA62-F657-4AC4-A20D-FF4014D65A5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73DFDA62-F657-4AC4-A20D-FF4014D65A5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DADE464A-6F0D-4CE5-9F55-107FB9CA6416}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DADE464A-6F0D-4CE5-9F55-107FB9CA6416}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DADE464A-6F0D-4CE5-9F55-107FB9CA6416}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DADE464A-6F0D-4CE5-9F55-107FB9CA6416}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF24C3B3-D1EE-4A03-8BB0-0349C6DA7488}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF24C3B3-D1EE-4A03-8BB0-0349C6DA7488}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF24C3B3-D1EE-4A03-8BB0-0349C6DA7488}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF24C3B3-D1EE-4A03-8BB0-0349C6DA7488}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
