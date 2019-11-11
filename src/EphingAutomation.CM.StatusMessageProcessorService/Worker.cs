@@ -32,40 +32,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             Log.Information("Starting background worker");
-            var factory = new ConnectionFactory() { HostName = "localhost" };
-            lastProcessedMessage = DateTime.UtcNow;
-            using (var connection = factory.CreateConnection())
-            {
-                using (var channel = connection.CreateModel())
-                {
-                    channel.QueueDeclare(queue: "EphingAdminStatusMessageQueue",
-                                 durable: true,
-                                 exclusive: false,
-                                 autoDelete: false,
-                                 arguments: null);
-                    channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
-                    var consumer = new EventingBasicConsumer(channel);
-                    consumer.Received += (model, ea) =>
-                    {
-                        StatusMessage statusMessage;
-                        using (var stream = new MemoryStream(ea.Body))
-                        {
-                            statusMessage = Serializer.Deserialize<StatusMessage>(stream);
-                        }
-                        Log.Information("Status message is {@statusMessage}", statusMessage);
-                        Console.WriteLine("test")
-                        channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
-                        lastProcessedMessage = DateTime.UtcNow;
-                    };
-                    channel.BasicConsume(queue: "EphingAdminStatusMessageQueue",
-                                 autoAck: false,
-                                 consumer: consumer);
-                    while(lastProcessedMessage > DateTime.UtcNow.AddMinutes(-10))
-                    {
-                        Thread.Sleep(1000);
-                    }
-                }
-            }
+
             /*
             _pipeServer = new NamedPipeServerStream("EphingAdmin.CM.StatusMessages", PipeDirection.InOut);
             _workerTasks = new List<Task>();
