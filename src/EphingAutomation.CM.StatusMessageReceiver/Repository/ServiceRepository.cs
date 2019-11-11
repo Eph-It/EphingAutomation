@@ -61,8 +61,6 @@ namespace EphingAutomation.CM.StatusMessageReceiver.Repository
                     throw new Exception("Pipe is not connected!");
                 }
                 Serializer.Serialize(pipe, smObject);
-                pipe.WaitForPipeDrain();
-                pipe.Dispose();
             }
         }
     }
