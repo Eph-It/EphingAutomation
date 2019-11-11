@@ -10,6 +10,8 @@ using EphingAutomation.Models.ConfigMgr;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ProtoBuf;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using Serilog;
 
 namespace EphingAutomation.CM.StatusMessageProcessorService
@@ -29,7 +31,21 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             Log.Information("Starting background worker");
+            var factory = new ConnectionFactory() { HostName = "localhost" };
+            using (var connection = factory.CreateConnection())
+            {
+                using (var channel = connection.CreateModel())
+                {
+                    channel.QueueDeclare(queue: "EphingAdminStatusMessageQueue",
+                                 durable: true,
+                                 exclusive: false,
+                                 autoDelete: false,
+                                 arguments: null);
+                    channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
+                    var consumer = new EventingBasicConsumer(channel);
 
+                }
+            }
             /*
             _pipeServer = new NamedPipeServerStream("EphingAdmin.CM.StatusMessages", PipeDirection.InOut);
             _workerTasks = new List<Task>();
