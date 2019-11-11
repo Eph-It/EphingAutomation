@@ -20,6 +20,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
         private NamedPipeServerStream _pipeServer;
         IProcessStatusMessage _processStatusMessage;
         IAsyncResult _beginWait;
+        bool RestartWait = false;
         public Worker(IProcessStatusMessage processStatusMessage)
         {
             _processStatusMessage = processStatusMessage;
@@ -34,7 +35,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
             DateTime startedBeginWait = DateTime.UtcNow;
             while (!stoppingToken.IsCancellationRequested)
             {
-                if (_beginWait.IsCompleted)
+                if (RestartWait)
                 {
                     _beginWait = _pipeServer.BeginWaitForConnection(new AsyncCallback(WaitForConnectionCallBack), _pipeServer);
                 }
@@ -57,7 +58,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
             {
                 Log.Information("Status message is {@statusMessage}", statusMessage);
             }
-            
+            RestartWait = true;
         }
         private Task _executingTask;
         private readonly CancellationTokenSource _stoppingCts = new CancellationTokenSource();
