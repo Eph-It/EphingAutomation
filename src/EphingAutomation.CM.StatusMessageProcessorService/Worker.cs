@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.Pipes;
 using System.Linq;
 using System.Threading;
@@ -22,7 +23,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
         private NamedPipeServerStream _pipeServer;
         IProcessStatusMessage _processStatusMessage;
         IAsyncResult _beginWait;
-        DateTime startedBeginWait;
+        DateTime lastProcessedMessage;
         public Worker(IProcessStatusMessage processStatusMessage)
         {
             _processStatusMessage = processStatusMessage;
@@ -43,6 +44,19 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
                                  arguments: null);
                     channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
                     var consumer = new EventingBasicConsumer(channel);
+                    consumer.Received += (model, ea) =>
+                    {
+                        StatusMessage statusMessage;
+                        using (var stream = new MemoryStream(ea.Body))
+                        {
+                            statusMessage = Serializer.Deserialize<StatusMessage>(stream);
+                        }
+                        Log.Information("Status message is {@statusMessage}", statusMessage);
+                        channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
+                    };
+                    channel.BasicConsume(queue: "EphingAdminStatusMessageQueue",
+                                 autoAck: false,
+                                 consumer: consumer);
 
                 }
             }
