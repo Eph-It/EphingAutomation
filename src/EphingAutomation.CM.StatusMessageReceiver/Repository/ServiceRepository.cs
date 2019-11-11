@@ -55,7 +55,11 @@ namespace EphingAutomation.CM.StatusMessageReceiver.Repository
             {
                 using (var channel = connection.CreateModel())
                 {
-
+                    channel.QueueDeclare(queue: "EphingAdminStatusMessageQueue",
+                                 durable: true,
+                                 exclusive: false,
+                                 autoDelete: false,
+                                 arguments: null);
                 }
             }
             using (var pipe = new NamedPipeClientStream(".", "EphingAdmin.CM.StatusMessages", PipeDirection.InOut, PipeOptions.None))
