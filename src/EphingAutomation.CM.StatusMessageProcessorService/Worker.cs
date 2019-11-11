@@ -20,7 +20,6 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
         private NamedPipeServerStream _pipeServer;
         IProcessStatusMessage _processStatusMessage;
         IAsyncResult _beginWait;
-        bool RestartWait = false;
         public Worker(IProcessStatusMessage processStatusMessage)
         {
             _processStatusMessage = processStatusMessage;
@@ -35,14 +34,9 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
             DateTime startedBeginWait = DateTime.UtcNow;
             while (!stoppingToken.IsCancellationRequested)
             {
-                if (RestartWait)
-                {
-                    _beginWait = _pipeServer.BeginWaitForConnection(new AsyncCallback(WaitForConnectionCallBack), _pipeServer);
-                }
                 Thread.Sleep(100);
                 if(startedBeginWait < DateTime.UtcNow.AddMinutes(-10))
                 {
-                    _pipeServer.EndWaitForConnection(_beginWait);
                     await Task.WhenAll(_workerTasks.ToArray());
                     break;
                 }
@@ -58,10 +52,14 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
             {
                 Log.Information("Status message is {@statusMessage}", statusMessage);
             }
-            RestartWait = true;
+            _pipeServer.Close();
+            _pipeServer = null;
+            _pipeServer = new NamedPipeServerStream("EphingAdmin.CM.StatusMessages", PipeDirection.InOut);
         }
         private Task _executingTask;
         private readonly CancellationTokenSource _stoppingCts = new CancellationTokenSource();
+        startedBeginWait = DateTime.UtcNow;
+        _beginWait = _pipeServer.BeginWaitForConnection(new AsyncCallback(WaitForConnectionCallBack), _pipeServer);
 
         public override Task StartAsync(CancellationToken cancellationToken)
         {
