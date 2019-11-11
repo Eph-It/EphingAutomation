@@ -33,7 +33,7 @@ namespace EphingAutomation.CM.StatusMessageReceiver
             }
             catch
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(5000);
                 serviceRepo.SendArgs(smObject);
                 statMessageErrorHandling.SaveErrors(smObject);
             }
