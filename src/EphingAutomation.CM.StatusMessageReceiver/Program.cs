@@ -8,6 +8,7 @@ using System.Linq;
 using System.ServiceProcess;
 using Serilog;
 using EphingAutomation.Logging;
+using System.Threading;
 
 namespace EphingAutomation.CM.StatusMessageReceiver
 {
@@ -32,8 +33,9 @@ namespace EphingAutomation.CM.StatusMessageReceiver
             }
             catch
             {
+                Thread.Sleep(1000);
+                serviceRepo.SendArgs(smObject);
                 statMessageErrorHandling.SaveErrors(smObject);
-                throw;
             }
 
             statMessageErrorHandling.ProcessPreviousErrors();
