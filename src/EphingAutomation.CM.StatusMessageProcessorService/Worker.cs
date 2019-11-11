@@ -36,7 +36,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
             {
                 if (_beginWait.IsCompleted)
                 {
-                    _beginWait = _pipeServer.BeginWaitForConnection(WaitForConnectionCallBack, _pipeServer);
+                    _beginWait = _pipeServer.BeginWaitForConnection(new AsyncCallback(WaitForConnectionCallBack), _pipeServer);
                 }
                 Thread.Sleep(100);
                 if(startedBeginWait < DateTime.UtcNow.AddMinutes(-10))
