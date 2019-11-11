@@ -1,13 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using EphingAutomation.CM.StatusMessageProcessorService.Repository;
 using EphingAutomation.Logging;
+using EphingAutomation.Models.ConfigMgr;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Hosting.WindowsServices;
+using ProtoBuf;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using Serilog;
 
 namespace EphingAutomation.CM.StatusMessageProcessorService
@@ -22,7 +27,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
             if (Environment.UserInteractive)
             {
                 var factory = new ConnectionFactory() { HostName = "localhost" };
-                lastProcessedMessage = DateTime.UtcNow;
+                //lastProcessedMessage = DateTime.UtcNow;
                 using (var connection = factory.CreateConnection())
                 {
                     using (var channel = connection.CreateModel())
@@ -42,17 +47,17 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
                                 statusMessage = Serializer.Deserialize<StatusMessage>(stream);
                             }
                             Log.Information("Status message is {@statusMessage}", statusMessage);
-                            Console.WriteLine("test")
+                            Console.WriteLine("test");
                             channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
-                            lastProcessedMessage = DateTime.UtcNow;
+                            //lastProcessedMessage = DateTime.UtcNow;
                         };
                         channel.BasicConsume(queue: "EphingAdminStatusMessageQueue",
                                      autoAck: false,
                                      consumer: consumer);
-                        while (lastProcessedMessage > DateTime.UtcNow.AddMinutes(-10))
-                        {
-                            Thread.Sleep(1000);
-                        }
+                        //while (lastProcessedMessage > DateTime.UtcNow.AddMinutes(-10))
+                        //{
+                        //    Thread.Sleep(1000);
+                        //}
                     }
                 }
                 var backgroundWorker = new Worker(new ProcessStatusMessage());
