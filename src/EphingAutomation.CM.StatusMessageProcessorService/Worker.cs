@@ -30,7 +30,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
             Log.Information("Starting background worker");
             _pipeServer = new NamedPipeServerStream("EphingAdmin.CM.StatusMessages", PipeDirection.InOut);
             _workerTasks = new List<Task>();
-            _beginWait = _pipeServer.BeginWaitForConnection(WaitForConnectionCallBack, null);
+            _beginWait = _pipeServer.BeginWaitForConnection(new AsyncCallback(WaitForConnectionCallBack), _pipeServer);
             DateTime startedBeginWait = DateTime.UtcNow;
             while (!stoppingToken.IsCancellationRequested)
             {
@@ -51,7 +51,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
         private void WaitForConnectionCallBack(IAsyncResult result)
         {
             
-            var statusMessage = Serializer.Deserialize<StatusMessage>(_pipeServer);
+            var statusMessage = Serializer.Deserialize<StatusMessage>(()result.AsyncState);
             
             if(statusMessage != null)
             {
