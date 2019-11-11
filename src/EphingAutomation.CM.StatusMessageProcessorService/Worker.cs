@@ -54,11 +54,11 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
                 Log.Information("Status message is {@statusMessage}", statusMessage);
             }
             _pipeServer.Close();
-            _pipeServer = null;
             _pipeServer = new NamedPipeServerStream("EphingAdmin.CM.StatusMessages", PipeDirection.InOut);
             startedBeginWait = DateTime.UtcNow;
             _beginWait = _pipeServer.BeginWaitForConnection(new AsyncCallback(WaitForConnectionCallBack), _pipeServer);
         }
+
         private Task _executingTask;
         private readonly CancellationTokenSource _stoppingCts = new CancellationTokenSource();
 
