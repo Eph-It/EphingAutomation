@@ -33,7 +33,7 @@ namespace EphingAutomation.CM.StatusMessageReceiver
             catch
             {
                 statMessageErrorHandling.SaveErrors(smObject);
-                return;
+                throw;
             }
 
             statMessageErrorHandling.ProcessPreviousErrors();
