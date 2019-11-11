@@ -21,7 +21,11 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
             loggerConfig.Configure("StatusMessageProcessorService");
             if (Environment.UserInteractive)
             {
-                var backgroundWorker = new Worker();
+                var backgroundWorker = new Worker(new ProcessStatusMessage());
+                backgroundWorker.StartAsync(new System.Threading.CancellationToken());
+                Console.ReadLine();
+                backgroundWorker.StopAsync(new System.Threading.CancellationToken());
+                backgroundWorker.Dispose();
             }
             else
             {
