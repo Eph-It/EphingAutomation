@@ -33,6 +33,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
         {
             Log.Information("Starting background worker");
             var factory = new ConnectionFactory() { HostName = "localhost" };
+            lastProcessedMessage = DateTime.UtcNow;
             using (var connection = factory.CreateConnection())
             {
                 using (var channel = connection.CreateModel())
@@ -53,11 +54,15 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
                         }
                         Log.Information("Status message is {@statusMessage}", statusMessage);
                         channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
+                        lastProcessedMessage = DateTime.UtcNow;
                     };
                     channel.BasicConsume(queue: "EphingAdminStatusMessageQueue",
                                  autoAck: false,
                                  consumer: consumer);
-
+                    while(lastProcessedMessage > DateTime.UtcNow.AddMinutes(-10))
+                    {
+                        Thread.Sleep(1000);
+                    }
                 }
             }
             /*
@@ -88,7 +93,7 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
             }
             _pipeServer.Close();
             _pipeServer = new NamedPipeServerStream("EphingAdmin.CM.StatusMessages", PipeDirection.InOut);
-            startedBeginWait = DateTime.UtcNow;
+            //startedBeginWait = DateTime.UtcNow;
             _beginWait = _pipeServer.BeginWaitForConnection(new AsyncCallback(WaitForConnectionCallBack), _pipeServer);
         }
 
