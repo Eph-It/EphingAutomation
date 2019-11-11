@@ -50,8 +50,9 @@ namespace EphingAutomation.CM.StatusMessageProcessorService
         }
         private void WaitForConnectionCallBack(IAsyncResult result)
         {
+            
             var statusMessage = Serializer.Deserialize<StatusMessage>(_pipeServer);
-            //_pipeServer.EndWaitForConnection(_beginWait);
+            
             if(statusMessage != null)
             {
                 Log.Information("Status message is {@statusMessage}", statusMessage);

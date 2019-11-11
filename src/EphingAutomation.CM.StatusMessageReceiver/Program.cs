@@ -27,7 +27,7 @@ namespace EphingAutomation.CM.StatusMessageReceiver
             };
             try
             {
-                //serviceRepo.StartEAService();
+                serviceRepo.StartEAService();
                 serviceRepo.SendArgs(smObject);
             }
             catch
