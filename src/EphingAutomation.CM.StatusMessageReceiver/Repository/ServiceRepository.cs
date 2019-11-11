@@ -12,6 +12,11 @@ namespace EphingAutomation.CM.StatusMessageReceiver.Repository
     {
         public void StartEAService(bool AlreadyRan = false)
         {
+            string eaEnvironment = Environment.GetEnvironmentVariable("EphingAutomationEnvironment");
+            if(eaEnvironment == "Development")
+            {
+                return;
+            }
             ServiceController sc = new ServiceController("EA.CM.StatusMessageProcessorService");
             if (sc.Status == ServiceControllerStatus.Running) { return; }
             if (AlreadyRan)
