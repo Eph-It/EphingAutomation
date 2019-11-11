@@ -3,6 +3,7 @@ using ProtoBuf;
 using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.Pipes;
 using System.ServiceProcess;
 using System.Text;
@@ -60,6 +61,17 @@ namespace EphingAutomation.CM.StatusMessageReceiver.Repository
                                  exclusive: false,
                                  autoDelete: false,
                                  arguments: null);
+                    byte[] msgOut;
+                    using (var stream = new MemoryStream())
+                    {
+                        Serializer.Serialize(stream, smObject);
+                        msgOut = stream.GetBuffer();
+                    }
+
+                    channel.BasicPublish(exchange: "",
+                                 routingKey: "hello",
+                                 basicProperties: null,
+                                 body: msgOut);
                 }
             }
             using (var pipe = new NamedPipeClientStream(".", "EphingAdmin.CM.StatusMessages", PipeDirection.InOut, PipeOptions.None))
