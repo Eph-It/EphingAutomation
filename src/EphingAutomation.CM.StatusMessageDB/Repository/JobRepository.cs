@@ -64,9 +64,9 @@ namespace EphingAutomation.CM.StatusMessageDB.Repository
                         activeJob.Finished = DateTime.UtcNow;
                         dbConnection.Query(@"
                             UPDATE Job
-                            SET Finsihed = @Finished
+                            SET Finished = @Finished
                             WHERE Id = @Id
-                        ",activeJob);
+                        ", activeJob);
                     }
                 }
             }

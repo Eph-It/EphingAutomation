@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EphingAutomation.CM.StatusMessageDB.Model
 {
-    public class StatusMessages
+    public class StatusMessage
     {
         public int Id { get; set; }
         public int MessageId { get; set; }
@@ -20,5 +20,6 @@ namespace EphingAutomation.CM.StatusMessageDB.Model
         public string InsString9 { get; set; }
         public string InsString10 { get; set; }
         public DateTime? Started { get; set; }
+        public DateTime? Finished { get; set; }
     }
 }
