@@ -1,4 +1,5 @@
 ﻿using System;
+using EphingAutomation.CM.StatusMessageDB;
 
 namespace EphingAutomation.CM.StatusMessageProcessor
 {
