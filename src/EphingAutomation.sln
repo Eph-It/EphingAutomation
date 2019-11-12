@@ -17,11 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EphingAutomation.CM.StatusM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EphingAutomation.Logging", "EphingAutomation.Logging\EphingAutomation.Logging.csproj", "{63711CCE-4A7F-4FC0-9019-EF1F769A56EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EphingAutomation.CM.StatusMessageService", "EphingAutomation.CM.StatusMessageService\EphingAutomation.CM.StatusMessageService.csproj", "{73DFDA62-F657-4AC4-A20D-FF4014D65A5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EphingAutomation.CM.StatusMessageProcessor", "EphingAutomation.CM.StatusMessageProcessor\EphingAutomation.CM.StatusMessageProcessor.csproj", "{DADE464A-6F0D-4CE5-9F55-107FB9CA6416}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EphingAutomation.CM.StatusMessageProcessor", "EphingAutomation.CM.StatusMessageProcessor\EphingAutomation.CM.StatusMessageProcessor.csproj", "{DADE464A-6F0D-4CE5-9F55-107FB9CA6416}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EphingAutomation.CM.StatusMessageDB", "EphingAutomation.CM.StatusMessageDB\EphingAutomation.CM.StatusMessageDB.csproj", "{DF24C3B3-D1EE-4A03-8BB0-0349C6DA7488}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EphingAutomation.CM.StatusMessageDB", "EphingAutomation.CM.StatusMessageDB\EphingAutomation.CM.StatusMessageDB.csproj", "{DF24C3B3-D1EE-4A03-8BB0-0349C6DA7488}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,10 +57,6 @@ Global
 		{63711CCE-4A7F-4FC0-9019-EF1F769A56EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63711CCE-4A7F-4FC0-9019-EF1F769A56EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63711CCE-4A7F-4FC0-9019-EF1F769A56EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{73DFDA62-F657-4AC4-A20D-FF4014D65A5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{73DFDA62-F657-4AC4-A20D-FF4014D65A5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{73DFDA62-F657-4AC4-A20D-FF4014D65A5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{73DFDA62-F657-4AC4-A20D-FF4014D65A5D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DADE464A-6F0D-4CE5-9F55-107FB9CA6416}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DADE464A-6F0D-4CE5-9F55-107FB9CA6416}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DADE464A-6F0D-4CE5-9F55-107FB9CA6416}.Release|Any CPU.ActiveCfg = Release|Any CPU
