@@ -29,10 +29,29 @@ namespace EphingAutomation.CM.StatusMessageDB
                 connection.Execute(@"
                     CREATE TABLE StatusMessages
                     (
-                        ID              integer primary key AUTOINCREMENT,
-                        MESSAGE_ID      integer,
-                        RECORDED        datetime,
-                        
+                        Id              integer primary key AUTOINCREMENT,
+                        MessageId       integer,
+                        Recorded        datetime,
+                        InsString1      nvarchar(max),
+                        InsString2      nvarchar(max),
+                        InsString3      nvarchar(max),
+                        InsString4      nvarchar(max),
+                        InsString5      nvarchar(max),
+                        InsString6      nvarchar(max),
+                        InsString7      nvarchar(max),
+                        InsString8      nvarchar(max),
+                        InsString9      nvarchar(max),
+                        InsString10     nvarchar(max),
+                        Started         datetime
+                    )
+                ");
+                connection.Execute(@"
+                    CREATE TABLE Job
+                    (
+                        Id                  integer primary key AUTOINCREMENT,
+                        Started             datetime,
+                        Finished            datetime,
+                        ProcessId           int
                     )
                 ");
             }
