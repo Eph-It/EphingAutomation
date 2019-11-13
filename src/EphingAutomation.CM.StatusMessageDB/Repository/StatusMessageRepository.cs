@@ -49,5 +49,13 @@ namespace EphingAutomation.CM.StatusMessageDB.Repository
                 ", MessageToCreate);
             }
         }
+        public StatusMessage GetNext()
+        {
+            DateTime StartedTime = DateTime.UtcNow;
+            using (var dbConnection = _db.SqlConnection())
+            {
+                dbConnection.Query(@"");
+            }
+        }
     }
 }

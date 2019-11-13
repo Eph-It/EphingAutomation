@@ -1,7 +1,7 @@
 $File = "$PSScriptRoot\bin\Release\netcoreapp3.0\win7-x64\EA.CM.StatusMessageReceiver.exe"
 Push-Location -Path $PSScriptRoot
 
-#dotnet publish --configuration Release --self-contained
+dotnet publish --configuration Release --self-contained
 
 $count = 0
 Measure-Command {

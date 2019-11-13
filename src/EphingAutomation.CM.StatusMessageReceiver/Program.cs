@@ -27,9 +27,7 @@ namespace EphingAutomation.CM.StatusMessageReceiver
         }
         static void Main(string[] args)
         {
-            var loggerConfig = new EALogging();
-            loggerConfig.Configure("StatusMessageReceiver");
-            // Log.Information("Started with parameters {@args}", args);
+            
             IConfigurationRoot configuration = null;
             try
             {
@@ -37,6 +35,8 @@ namespace EphingAutomation.CM.StatusMessageReceiver
             }
             catch (Exception ex)
             {
+                var loggerConfig = new EALogging();
+                loggerConfig.Configure("StatusMessageReceiver");
                 Log.Error(ex, "Error getting configuration");
                 throw;
             }
