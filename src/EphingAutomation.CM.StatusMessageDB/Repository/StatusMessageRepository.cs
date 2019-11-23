@@ -6,7 +6,7 @@ using System.Text;
 
 namespace EphingAutomation.CM.StatusMessageDB.Repository
 {
-    public class StatusMessageRepository
+    public class StatusMessageRepository : IStatusMessageRepository
     {
         StatusMessageDBContext _db;
         public StatusMessageRepository(StatusMessageDBContext db)
