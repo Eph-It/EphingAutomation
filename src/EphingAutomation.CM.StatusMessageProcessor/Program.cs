@@ -20,6 +20,7 @@ namespace EphingAutomation.CM.StatusMessageProcessor
         {
             var loggingClass = new EphingAutomation.Logging.EALogging();
             loggingClass.Configure("StatusMessageProcessor");
+            
             IConfigurationRoot configuration = null;
             try
             {
@@ -37,7 +38,8 @@ namespace EphingAutomation.CM.StatusMessageProcessor
             var jobRepo = new StatusMessageDB.Repository.JobRepository(db);
             jobRepo.New();
 
-
+            var statusMessageRepo = new StatusMessageDB.Repository.StatusMessageRepository(db);
+            
             
             jobRepo.EndJob();
         }

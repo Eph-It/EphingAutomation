@@ -54,7 +54,34 @@ namespace EphingAutomation.CM.StatusMessageDB.Repository
             DateTime StartedTime = DateTime.UtcNow;
             using (var dbConnection = _db.SqlConnection())
             {
-                dbConnection.Query(@"");
+                var smList = dbConnection.Query<StatusMessage>(@"
+                    SELECT * FROM StatusMessage WHERE Started IS NULL ORDER BY Recorded LIMIT 1
+                ").AsList();
+
+                if (smList.Count == 0) { return null; }
+
+                var sm = smList[0];
+                sm.Started = StartedTime;
+
+                dbConnection.Query(@"
+                    UPDATE StatusMessage
+                    SET Started = @Started
+                    WHERE Id = @Id 
+                ",sm);
+                return sm;
+            }
+        }
+        public void Finish(StatusMessage MessageToFinish)
+        {
+            DateTime Finished = DateTime.UtcNow;
+            MessageToFinish.Finished = Finished;
+            using (var dbConnection = _db.SqlConnection())
+            {
+                dbConnection.Query(@"
+                    UPDATE StatusMessage
+                    SET Finished = @Finished
+                    WHERE Id = @Id 
+                ", MessageToFinish);
             }
         }
     }
