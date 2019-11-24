@@ -25,6 +25,7 @@ namespace EphingAutomation.CM.StatusMessageProcessor.Repository
                     LastProcessed = DateTime.UtcNow;
 
                 }
+                Thread.Sleep(100);
             }
         }
     }
