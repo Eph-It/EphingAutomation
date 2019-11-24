@@ -11,3 +11,11 @@ Measure-Command {
     }
 }
 Pop-Location
+
+$count = 0
+Measure-Command {
+    while($count -lt 10){
+        $count++
+        Start-Process PowerShell.exe -ArgumentList @('-NoProfile','-Command cmd /c') -Wait
+    }
+}
