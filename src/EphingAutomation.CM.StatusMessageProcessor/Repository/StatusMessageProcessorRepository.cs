@@ -21,6 +21,7 @@ namespace EphingAutomation.CM.StatusMessageProcessor.Repository
                 var nextSM = _smRepo.GetNext();
                 if(nextSM != null)
                 {
+                    LastProcessed = DateTime.UtcNow;
 
                 }
             }
