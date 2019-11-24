@@ -9,6 +9,7 @@ namespace EphingAutomation.CM.StatusMessageProcessor.Repository
     public class StatusMessageProcessorRepository
     {
         IStatusMessageRepository _smRepo;
+
         public StatusMessageProcessorRepository(StatusMessageDBContext dbContext)
         {
             _smRepo = new StatusMessageRepository(dbContext);
