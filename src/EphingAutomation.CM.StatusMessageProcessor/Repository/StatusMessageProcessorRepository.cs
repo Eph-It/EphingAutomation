@@ -10,13 +10,16 @@ namespace EphingAutomation.CM.StatusMessageProcessor.Repository
     public class StatusMessageProcessorRepository
     {
         IStatusMessageRepository _smRepo;
+        IJobRepository _jobRepository;
 
         public StatusMessageProcessorRepository(StatusMessageDBContext dbContext)
         {
             _smRepo = new StatusMessageRepository(dbContext);
+            _jobRepository = new JobRepository(dbContext);
         }
         public void Start()
         {
+            _jobRepository.New();
             DateTime LastProcessed = DateTime.UtcNow;
             while(LastProcessed < DateTime.UtcNow.AddMinutes(5))
             {
@@ -28,6 +31,7 @@ namespace EphingAutomation.CM.StatusMessageProcessor.Repository
                 }
                 Thread.Sleep(100);
             }
+            _jobRepository.EndJob();
         }
     }
 }
